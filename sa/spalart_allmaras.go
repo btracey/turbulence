@@ -2,26 +2,6 @@ package sa
 
 import "math"
 
-/*
-type SAConstantList str
-	CB1                 float64
-	Sigma               float64
-	CB2                 float64
-	Kappa               float64
-	CW2                 float64
-	CW3                 float64
-	CV1                 float64
-	CT3                 float64
-	CT4                 float64
-	CW1                 float64
-	CV1Cubed            float64
-	CW3Sixthed          float64
-	CB1OverKappaSquared float64
-	CB2OverSigma        float64
-}
-
-*/
-
 const (
 	CB1                 = 0.1355
 	Sigma               = 2.0 / 3.0
@@ -122,12 +102,12 @@ func (s *SA) computeR() {
 }
 
 func (s *SA) computeG() {
-	s.ComputeR()
+	s.computeR()
 	s.G = s.R + CW2*(math.Pow(s.R, 6)-s.R)
 }
 
 func (s *SA) computeFw() {
-	s.ComputeG()
+	s.computeG()
 	limiter := (1 + CW3Sixthed) / (math.Pow(s.G, 6) + CW3Sixthed)
 	s.Fw = s.G * math.Pow(limiter, 1.0/6.0)
 }
@@ -143,7 +123,7 @@ func (s *SA) computeDestruction() {
 func (s *SA) computeCrossProduction() {
 	s.CrossProduction = 0
 	for i := 0; i < s.NDim; i++ {
-		s.CrossProduction += Cb2OverSigma * s.DNuHatDX[i] * s.DNuHatDX[i]
+		s.CrossProduction += CB2OverSigma * s.DNuHatDX[i] * s.DNuHatDX[i]
 	}
 }
 
@@ -168,6 +148,6 @@ func (s *SA) Source() float64 {
 	s.computeProduction()
 	s.computeDestruction()
 	s.computeCrossProduction()
-	s.SourceTerm = s.Production - s.Destruction + s.CrossDiffusion
+	s.SourceTerm = s.Production - s.Destruction + s.CrossProduction
 	return s.SourceTerm
 }
