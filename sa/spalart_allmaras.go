@@ -20,26 +20,29 @@ const (
 	CB2OverSigma        = CB2 / Sigma
 )
 
+// TODO: At some point, it should be SA.Compute(). Also, should replace with a
+// 2-D and 3-D
+
 type SA struct {
 	Unlimited bool // Should caps be put on the variables
 	// Inputs
-	NDim                int
-	Nu                  float64
-	NuHat               float64
-	DNuHatDX            []float64
-	DUIdXJ              [][]float64
-	WallDistance        float64
-	LimitedWallDistance float64
+	NDim         int
+	Nu           float64
+	NuHat        float64
+	DNuHatDX     []float64
+	DUIdXJ       [][]float64
+	WallDistance float64
 
 	// Intermediate quantities
-	W       [][]float64
-	Chi     float64
-	Ft2     float64
-	Omega   float64
-	SHat    float64
-	InvSHat float64
-	Fv1     float64
-	Fv2     float64
+	W                   [][]float64
+	Chi                 float64
+	Ft2                 float64
+	Omega               float64
+	SHat                float64
+	InvSHat             float64
+	Fv1                 float64
+	Fv2                 float64
+	LimitedWallDistance float64
 
 	Production      float64
 	Destruction     float64
