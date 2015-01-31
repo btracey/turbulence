@@ -364,3 +364,20 @@ func NondimNuGradMagAltStar(grad, nu, nuhat, dist float64) float64 {
 	*/
 	return nuGradAlt / sourcenondimer
 }
+
+func Fv1(chi float64) float64 {
+	return chi * chi * chi / (chi*chi*chi + CV1Cubed)
+}
+
+func Fv2(chi, fv1 float64) float64 {
+	return 1 - chi/(1+chi*fv1)
+}
+
+func Fw(g float64) float64 {
+	limiter := (1 + CW3Sixthed) / (math.Pow(g, 6) + CW3Sixthed)
+	return g * math.Pow(limiter, 1.0/6.0)
+}
+
+func G(r float64) float64 {
+	return r + CW2*(math.Pow(r, 6)-r)
+}
